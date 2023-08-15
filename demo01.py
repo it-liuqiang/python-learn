@@ -3,12 +3,14 @@ Descripttion:
 version: 
 Author: HuangJunren
 Date: 2023-02-14 17:21:52
-LastEditors: liuq_wb liuq_wb@ehualu.com
-LastEditTime: 2023-02-16 11:31:26
+LastEditors: liuq liuq03@ehualu.com
+LastEditTime: 2023-08-14 16:51:25
 '''
 import math
 from turtle import *
-from TurtleWorld import *
+import logging
+
+
 degrees = 45
 x= math.sin(degrees / 360.0 * 2 * math.pi)
 print(1+x)
@@ -55,4 +57,24 @@ def square(t):
         lt(t)
 
 
-square(bob())
+
+
+def count(r):
+    logging.info('半径为r的球体积是43πr3。半径为5的球体积是多少？')
+    a = 4 /3 *3.14*(r**3)
+    return a
+
+print(count(5))
+
+def buyBook(n):
+    b = 24.95
+    y = 3
+    if n <= 1:
+         y = 3
+    else:
+        y = 3+(n-1)*0.75
+
+    total = (n*b)*0.4
+
+    return total+y
+print("购买60本书的价格为： "+ str(buyBook(60)) )
