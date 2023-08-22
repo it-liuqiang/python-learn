@@ -12,6 +12,7 @@ import logging
 import random
 import requests
 import time
+import my_module
 
 degrees = 45
 x= math.sin(degrees / 360.0 * 2 * math.pi)
@@ -243,3 +244,30 @@ file_path = '/home/kali/Downloads/python.text'
 with open(file=file_path , mode="a" , encoding="UTF-8") as file:
     file.write("\n我爱学java！！！")
 
+#-------------------------------------------------------------------------------
+
+#异常处理
+try:
+    open("/homme/kali/demo.text",mode="r" , encoding="UTF-8")
+except:
+    print("error")
+#捕获指定异常
+try:
+    1/0
+except Exception as e:
+    print(e)
+finally:
+    print("结束")
+
+#---------------------------------------------------------------------------------
+#模块的导入
+print(f"当前时间： {my_module.str_time(time.localtime())}")
+
+#main 函数的使用  if __name__ == '__main__':
+
+# 科学计算 numpy包
+# 数据分析 pandas包
+# 打数据计算 pyspark ， apache-flink包
+# 图形可视化 matplotlib ， pyecharts
+# 人工智能 tensorflow
+    
