@@ -1,15 +1,19 @@
+
 import logging
+
 def print_file_info(file_name):
     file = None
+    content = None
     try:
         file = open(file_name , mode="r" , encoding="UTF-8")
-        return file.read()
+        content =  file.read()
     except Exception as e:
         logging.debug(e)
     finally:
         logging.info("close success !")
         if file:
             file.close
+    return content
 
 def append_to_file(file_name,data):
     file = None
