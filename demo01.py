@@ -13,7 +13,7 @@ import random
 import requests
 import time
 import my_module
-
+import json
 degrees = 45
 x= math.sin(degrees / 360.0 * 2 * math.pi)
 print(1+x)
@@ -150,19 +150,15 @@ print(f"从1-{num}（不含num）共计出现偶数{count}次")
 
 #---------------------------------------------------------------
 # 函数的注释
-def add (x,y)->bool:
+def bool(x,y):
     """_summary_
 
     Args:
         x (_type_): _description_
         y (_type_): _description_
-
-    Returns:
-        bool: _description_
     """
-
 #-----------------------------------------------------------------
-#数据容器
+# 数据容器
 # 列表 list 可变数组 []
 list = [1,2,3]
 print(f"切片： {list[0:1]}") 
@@ -259,6 +255,7 @@ except Exception as e:
 finally:
     print("结束")
 
+
 #---------------------------------------------------------------------------------
 #模块的导入
 print(f"当前时间： {my_module.str_time(time.localtime())}")
@@ -270,4 +267,27 @@ print(f"当前时间： {my_module.str_time(time.localtime())}")
 # 打数据计算 pyspark ， apache-flink包
 # 图形可视化 matplotlib ， pyecharts
 # 人工智能 tensorflow
-    
+
+#---------------------------------------------------------------------------------\
+#json数据格式
+
+#列表转json
+data = [{"name":"jery","age":17 },{"name":"tom","age":18},{"name":"乔丹","age":18}]
+json_str = json.dumps(data,ensure_ascii=False)
+print(type(json_str))
+print(json_str)
+#字典转json
+dict = {'name':'科比','age':15,'address':"阿拉斯加"}
+json_str = json.dumps(dict,ensure_ascii=False)
+print(json_str)
+
+#json转列表list
+str_json_array = '[{"name": "jery", "age": 17}, {"name": "tom", "age": 18}, {"name": "乔丹", "age": 18}]'
+list = json.loads(str_json_array)
+print(type(list))
+print(list)
+#json转字典dict
+str_json = '{"name": "科比", "age": 15, "address": "阿拉斯加"}'
+dict = json.loads(str_json)
+print(type(dict))
+print(dict)
