@@ -1,0 +1,14 @@
+case1:
+ info:
+  title: "正常登陆"
+  url: http://192.168.1.1/user/login
+  method: "POST"
+ json:
+  username: "admin"
+  password: "123456"
+ expected:
+  status_code: 
+  - 200
+  - 300
+  content: "user_id"
+
