@@ -26,3 +26,4 @@ a = "abcdefg"
 if __name__ == "__main__":
     print(str_reverse(a))
     print(substr(a,2,5))
+
