@@ -1,19 +1,4 @@
-'''
-Author: liuq liuq03@ehualu.com
-Date: 2023-08-24 09:52:47
-LastEditors: liuq liuq03@ehualu.com
-LastEditTime: 2023-08-25 09:33:48
-FilePath: \python-learn\read_excel.py
-Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
-'''
-'''
-Author: liuq liuq03@ehualu.com
-Date: 2023-08-24 09:52:47
-LastEditors: liuq liuq03@ehualu.com
-LastEditTime: 2023-08-24 15:39:08
-FilePath: \python-learn\read_excel.py
-Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
-'''
+
 
 import json
 import logging
