@@ -1,8 +1,8 @@
 '''
 Author: liuq liuq03@ehualu.com
 Date: 2023-11-07 21:18:00
-LastEditors: liuq liuq03@ehualu.com
-LastEditTime: 2023-11-07 21:20:06
+LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+LastEditTime: 2023-11-29 16:02:41
 FilePath: \python-learn\sql\insert.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -13,7 +13,7 @@ def open():
     建立数据库连接
     :return: 数据数据
     """
-    db = pymysql.connect(host="192.168.40.128", user="root", password="root123", database="student_db", charset="utf8",autocommit=True)
+    db = pymysql.connect(host="10.20.5.29", user="root", password="Cvsehl1234__", database="smart_inciden", charset="utf8",autocommit=True)
     return db
 
 def query(sql, *keys):

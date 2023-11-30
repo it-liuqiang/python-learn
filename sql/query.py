@@ -1,3 +1,4 @@
+
 import pymysql 
 
 def open():
@@ -5,7 +6,7 @@ def open():
     建立数据库连接
     :return: 数据数据
     """
-    db = pymysql.connect(host="192.168.40.128", user="root", password="root123", database="student_db", charset="utf8",autocommit=True)
+    db = pymysql.connect(host="10.20.5.29", user="root", password="Cvsehl1234__", database="smart_inciden", charset="utf8",autocommit=True)
     return db
 
 
