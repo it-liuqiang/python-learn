@@ -2,7 +2,7 @@
 Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
 Date: 2023-11-29 16:05:12
 LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
-LastEditTime: 2023-11-29 18:10:31
+LastEditTime: 2023-12-01 14:35:35
 FilePath: \python-learn\sql\create.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -26,9 +26,9 @@ if __name__ == '__main__':
         dbConfig = DBConfig()
         db = open(dbConfig.host,dbConfig.port,dbConfig.username,dbConfig.password,dbConfig.database)
         cursor = db.cursor()
-        sql = "select * from t_dl_user"
+        sql = "select * from t_server"
         count = cursor.execute(sql);
-        result = cursor.fetchone()
+        result = cursor.fetchall()
         print(result)
         cursor.close
         db.close
