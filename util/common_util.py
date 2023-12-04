@@ -8,39 +8,12 @@ import glob
 import pymysql
 from toollib.guid import SnowFlake
 import hashlib
+import json
+from datetime import datetime
+
 
 
 class common_util:
-
-    db_host: None
-    db_port: 3306
-    db_username: None
-    db_password: None
-    db_database: None
-
-    server_host: None
-    server_port: 22   
-    server_username: None
-    server_password: None   
-
-
-    def __init__(self):
-        # 初始化配置文件
-        cfg = configparser.RawConfigParser()
-        cfg.read(os.path.abspath('./config/config.ini'),encoding='utf-8') 
-        # 赋值
-        self.db_host = cfg.get('localdb','host')
-        self.db_port = cfg.getint('localdb','port') 
-        self.db_username = cfg.get('localdb','user') 
-        self.db_password = cfg.get('localdb','password') 
-        self.db_database = cfg.get('localdb','database') 
-        
-        self.server_host = cfg.get('server','host')
-        self.server_port = cfg.getint('server','port') 
-        self.server_username = cfg.get('server','user') 
-        self.server_password = cfg.get('server','password')
-
-
 
     """
         图片转视频
@@ -99,46 +72,46 @@ class common_util:
 
         video_folder: 视频文件源文件
     """
-    def insert_sql(self,video_path):
+    def build_data(video_root):
+        values = []
+        for i, video_path in enumerate(glob.glob(os.path.join(video_root, '*.mp4'))):
 
-        name = os.path.basename(video_path)
-        device_id= SnowFlake().gen_uid()
+            name = os.path.basename(video_path)
+            device_id= SnowFlake().gen_uid()
 
-        if os.path.isfile(video_path):
-            fp=open(video_path,'rb')
-            contents=fp.read()
-            fp.close()
-            md5= hashlib.md5(contents).hexdigest()
-        else:
-            print('file not exists')
-            md5= None
-        path="/data/volume/ry/video/"+name;
-        
-        sql = 'INSERT INTO t_video_file_upload (device_id, name, md5, path, upload_time) values (%s,%s,%s,%s,%s)'
-        # values = [('device_id',device_id),('name',name),('md5',md5),('path',path)]
+            if os.path.isfile(video_path):
+                fp=open(video_path,'rb')
+                contents=fp.read()
+                fp.close()
+                md5= hashlib.md5(contents).hexdigest()
+            else:
+                print('file not exists')
+                md5= None
+            path="/data/volume/ry/video/"+name;
 
-        # sql = "select * from t_server";
-        db = pymysql.connect(host=self.db_host,
-                            port=self.db_port, 
-                            user=self.db_username, 
-                            password=self.db_password, 
-                            database=self.db_database, 
-                            charset="utf8",
-                            autocommit=True)
-        
-        cursor = db.cursor()  #         
-        cursor.execute(sql, (device_id,name,md5,path,time.localtime()))
+            data = (device_id, name, md5, path, datetime.now())
+            values.append(data)
+        print(f'参数：{json.dumps(values,default=str,ensure_ascii=False)}')
 
-        # cursor.execute(sql);
-        # result = cursor.fetchone()
-        # print(result)
-
-        cursor.close()
-        db.close()
-        return cursor.rowcount
+        return values
 
     if __name__ == '__main__':
         #本地视频文件存储目录
         video_root = r'D:\app\algo_pic\video'
-        for i, video_path in enumerate(glob.glob(os.path.join(video_root, '*.mp4'))):
-            insert_sql(video_path=video_path)
+   
+        db = pymysql.connect(host="10.20.5.11",
+                            port=3306, 
+                            user="root", 
+                            password="cwovEll__", 
+                            database="ai_middle_station", 
+                            charset="utf8",
+                            autocommit=True)
+        
+        values = build_data(video_root=video_root)
+        sql = 'INSERT INTO t_video_file_upload (device_id, name, md5, path, upload_time) values (%s,%s,%s,%s,%s)'
+        
+        cursor = db.cursor()          
+        cursor.executemany(sql,values)
+
+        cursor.close()
+        db.close()

@@ -2,18 +2,21 @@
 Author: liuq liuq03@ehualu.com
 Date: 2023-11-07 21:18:00
 LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
-LastEditTime: 2023-11-29 16:02:41
+LastEditTime: 2023-12-04 21:50:11
 FilePath: \python-learn\sql\insert.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
 import pymysql
+import json
+from pymysql import cursors
+
 
 def open():
     """
     建立数据库连接
     :return: 数据数据
     """
-    db = pymysql.connect(host="10.20.5.29", user="root", password="Cvsehl1234__", database="smart_inciden", charset="utf8",autocommit=True)
+    db = pymysql.connect(host="10.20.5.29", port=3326, user="root", password="Cvsehl1234__", database="test", charset="utf8",autocommit=True,cursorclass=cursors.DictCursor)
     return db
 
 def query(sql, *keys):
@@ -39,33 +42,40 @@ def insert(sql, values):
     db = open()  # 打开数据库连接
     cursor = db.cursor()  # 使用cursor（）方法获取游标
     cursor.executemany(sql, values)
-    db.commit()
+    # db.commit()
     cursor.close()
     db.close()
     return cursor.rowcount
 
+def create(database, sql):
+    db = open()
+    #选择数据库
+    db.select_db(database)
+    cur = db.cursor()
+    #执行sql
+    cur.execute(sql)
+    db.close()
+    cur.close()
+    
 
-
-if __name__ == "__main__":
-    try:
-        sql = "select * from user_info where userName=%s and userPwd=%s"
-        val = ("bob", "bob")
-        tuple = query(sql)
-        print(tuple)
-        for index in range(len(tuple)):
-            temp_dict = dict()
-            temp_dict["userName"] = tuple[index][0]
-            temp_dict["userPwd"] = tuple[index][1]
-            all_user_info.append(temp_dict)
-        print(all_user_info)
-    except:
-        print("数据读取错误！")
 
 
 if __name__ == "__main__":
     try:
-        sql1 = "insert into user_info (userName,userPwd) values (%s,%s)"
-        val = [("bob", "bob"),("tom", "tom")]
-        print(insert(sql,val),"条数据添加成功")
-    except:
+        # sql = "create table user_info(id int NOT NULL AUTO_INCREMENT, name varchar(255) , age int, gender varchar(2), PRIMARY KEY (id) USING BTREE) COMMENT='用户表'";
+        # sql = "drop table user_info"
+        # create(database="test",sql=sql)
+
+        # sql = "insert into user_info (name,age,gender) value(%s,%s,%s)"
+        # values = [("东方月初",31,"男"),("涂山雅雅",29,"女")]
+        # insert(sql , values)
+
+        sql = "select id,name,age,gender from user_info "
+        result = query(sql)
+        print(f"{json.dumps(result,ensure_ascii=False)}")
+        # print(result, '\n', type(result[0]))
+
+
+    except Exception as ex:
+        ex.with_traceback()
         print("数据操作错误！")
