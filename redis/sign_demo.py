@@ -5,13 +5,14 @@ redis_host = '10.20.5.9'
 redis_port = 7001
 
 
+redis_client = redis.StrictRedis(host=redis_host, port=redis_port, db=0)
+
+
 # 连接redis     
-def connect_redis():
-    return redis.Redis(host=redis_host, port=redis_port, db=0,password='Cvsehl1234__')  
-    
+
 # reids 示例
 def redis_demo():
-    r = connect_redis()
+    r = redis_client
     r.set('name', 'zhangsan')
     print(r.get('name'))
 
@@ -40,8 +41,18 @@ def sign_demo1(uid=1001,start_date='2024-08-01'):
 
     offset = int((today_data - start_time)/86400)
     print(f'今天是第{offset}天')
-    r = connect_redis()
+    r = redis_client
     r.setbit(uid,offset,1)
+
+# 订阅key过期事件
+pubsub = redis_client.pubsub()
+pubsub.subscribe('__keyevent@0__:expired')
+ 
+print(f"Starting to listen for expired keys on db 0...")
+for message in pubsub.listen():
+    if message['type'] == 'message':
+        expired_key = message['data']
+        print(f"Key {expired_key} has expired.")
 
 if __name__ == '__main__':
     # redis_demo()
