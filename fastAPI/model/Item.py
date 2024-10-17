@@ -9,4 +9,5 @@ class Item(BaseModel):
     price: float = Query(gt=1,lt=10,description="价格超出范围")
     # 可以不传递默认值或者是可选值
     is_offer: bool = None
+    timestamp: float
     
